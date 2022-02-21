@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    #container {
+      display: flex;
+      border: 1px solid black;
+    }
+
+    #sidebar {
+      flex: 2;
+      border: 1px solid black;
+      font-size: 25px;
+      padding: 10px;
+    }
+
+    #main {
+      flex: 8;
+      border: 1px solid black;
+    }
+
+    #news {
+      display: flex;
+      border: 1px solid black;
+      gap: 20px;
+      margin: 30px;
+      cursor: pointer;
+    }
+
+    #news>img {
+      height: 35vh;
+      width: 38vw;
+    }
+  </style>
+
+  <title>Home</title>
+</head>
+
+<body>
+  <div id="container">
+    <div id="sidebar">
+      <!--DO NOT CHANGE THIS ID's-->
+      <!--Append the horizontal navbar(sidebar) here only-->
+    </div>
+
+    <div id="main">
+      <!--DO NOT CHANGE THIS ID's-->
+      <!--Append top headlines from india here only-->
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script type="module">
+
+  import sidebar from "./components/sidebar.js";
+  import { apiCall, appendArticles } from "./scripts/main.js";
+
+  let mainDiv = document.getElementById("main")
+
+  let sidebarDiv = document.getElementById("sidebar");
+  sidebarDiv.innerHTML = sidebar();
+
+  let res = await apiCall("https://shrouded-earth-23381.herokuapp.com/api/headlines/india");
+  console.log('res:', res)
+
+  appendArticles(res, mainDiv);
+
+
+  let input = document.getElementById("searchbar");
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+
+      let inputValue = input.value;
+      if (inputValue === "cricket" || inputValue === "Cricket" || inputValue === "CRICKET") {
+        localStorage.setItem("search_term", inputValue)
+
+        window.location.href = "search.html"
+      }
+    }
+  })
+
+
+
+</script>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+
+  <style>
+    #container {
+      display: flex;
+      border: 1px solid black;
+    }
+
+    #sidebar {
+      flex: 2;
+      border: 1px solid black;
+      font-size: 25px;
+      padding: 10px;
+    }
+
+    #main {
+      flex: 8;
+      border: 1px solid black;
+    }
+
+    #main>img {
+      width: 45vw;
+      height: 42vh;
+    }
+  </style>
+</head>
+
+<body>
+  <!--DO NOT CHANGE THIS ID's-->
+
+  <div id="container">
+    <div id="sidebar">
+      <!--add your sidebar component here-->
+    </div>
+
+    <div id="main">
+      <!--DO NOT CHANGE THIS ID's-->
+      <!--Show the clicked article in detailed format here ONLY-->
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script type="module">
+
+  import sidebar from "./components/sidebar.js";
+
+  let sidebarDiv = document.getElementById("sidebar");
+  sidebarDiv.innerHTML = sidebar();
+
+  let article = JSON.parse(localStorage.getItem("article")) || [];
+  console.log('article:', article)
+
+  let mainDiv = document.getElementById("main")
+
+  let heading = document.createElement("h1");
+  heading.innerHTML = article.title;
+
+  let image = document.createElement("img");
+  image.src = article.urlToImage;
+
+  let cont = document.createElement("h2");
+  cont.innerHTML = article.content;
+
+  mainDiv.append(heading, image, cont)
+
+
+
+
+  let input = document.getElementById("searchbar");
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+
+      let inputValue = input.value;
+      if (inputValue === "cricket" || inputValue === "Cricket" || inputValue === "CRICKET") {
+        localStorage.setItem("search_term", inputValue)
+
+        window.location.href = "search.html"
+      }
+    }
+  })
+
+
+</script>
